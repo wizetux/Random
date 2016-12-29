@@ -1,3 +1,4 @@
+# A small script that will set the backlight setting for my laptop screen.
 #!/bin/bash
 
 maxBacklight=`cat /sys/class/backlight/intel_backlight/max_brightness`;
