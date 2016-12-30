@@ -1,7 +1,8 @@
 #!/usr/bin/bash
 
-xinput=`which xinput`
-id=`${xinput} list | grep TouchPad | grep -Po 'id=\K[^\s]*'`
+xinput='/usr/bin/xinput'
+grep='/usr/bin/grep'
+id=`${xinput} list | ${grep} TouchPad | ${grep} -Po 'id=\K[^\s]*'`
 
 case "$1" in
 	on)
