@@ -1,0 +1,98 @@
+background yes
+font Sans:size=8
+#xftfont Sans:size=10
+use_xft yes
+xftalpha 0.9
+update_interval 1.0
+total_run_times 0
+own_window yes
+own_window_type desktop
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+minimum_size 220 5
+maximum_width 220
+draw_shades yes
+draw_outline no
+draw_borders no
+draw_graph_borders yes
+default_color green
+default_shade_color black
+default_outline_color green
+alignment bottom_left
+gap_x 12
+gap_y 10
+no_buffers yes
+uppercase no
+cpu_avg_samples 2
+override_utf8_locale no
+uppercase yes # set to yes if you want all text to be in uppercase
+
+TEXT
+SYSTEM ${alignr}${time %a %d   %r}${color}
+
+Hostname: $alignr$nodename
+Kernel: $alignr$kernel
+Uptime: $alignr$uptime
+
+#CPU: ${alignr}${freq} MHz
+Processes: ${alignr}$processes ($running_processes running)
+Load: ${alignr}$loadavg
+Temp: ${alignr}${hwmon 0 temp 1} °C
+GPU Temp: ${alignr}${exec nvidia-smi -q -d TEMPERATURE | grep "GPU Current" | cut -c39-40} °C
+Battery: ${alignr}${battery_time}
+${battery_bar 4}
+
+CPU1 ${alignc}${freq cpu1} MHz${alignr}${cpu cpu1}%
+${cpubar cpu1 4}
+CPU2 ${alignc}${freq cpu2} MHz${alignr}${cpu cpu2}%
+${cpubar cpu2 4}
+CPU3 ${alignc}${freq cpu3} MHz${alignr}${cpu cpu3}%
+${cpubar cpu3 4}
+CPU4 ${alignc}${freq cpu4} MHz${alignr}${cpu cpu4}%
+${cpubar cpu4 4}
+#Ram ${alignr}$mem / $memmax ($memperc%)
+#${membar 4}
+
+${cpugraph 0 25,214 00FF00 FF0000}
+Highest CPU $alignr CPU% MEM%
+${top name 1}$alignr${top cpu 1}${top mem 1}
+${top name 2}$alignr${top cpu 2}${top mem 2}
+${top name 3}$alignr${top cpu 3}${top mem 3}
+
+MEMORY ${hr 1}${color}
+
+System ${alignr}${mem}/${memmax}
+${membar}
+Swap ${alignr}${swap}/${swapmax}
+${swapbar}
+
+#Highest MEM $alignr CPU% MEM%
+#${top_mem name 1}$alignr${top_mem cpu 1}${top_mem mem 1}
+#${top_mem name 2}$alignr${top_mem cpu 2}${top_mem mem 2}
+#${top_mem name 3}$alignr${top_mem cpu 3}${top_mem mem 3}
+#
+Filesystem ${hr 1}
+
+Root: ${alignr}${fs_free /} / ${fs_size /}
+${fs_bar 4 /}
+Home: ${alignr}${fs_free /home/wizetux} / ${fs_size /home/wizetux}
+${fs_bar 4 /home/wizetux}
+Minecraft: ${alignr}${fs_free /Minecraft} / ${fs_size /Minecraft}
+${fs_bar 4 /Minecraft}
+VirtualBox: ${alignr}${fs_free /VirtualBox} / ${fs_size /VirtualBox}
+${fs_bar 4 /VirtualBox}
+${if_mounted /mnt/usb}/mnt/usb: ${alignr}${fs_free /mnt/usb} / ${fs_size /mnt/usb}
+${fs_bar 4 /mnt/usb}${endif}
+${if_up wlp3s0}WLAN ${hr 1}
+
+Down ${downspeed wlp3s0}/s ${alignr}Up ${upspeed wlp3s0}/s
+${downspeedgraph wlp3s0 25,107 00FF00 FF0000 -t} ${alignr}${upspeedgraph wlp3s0 25,107 00FF00 FF0000 -t}
+Total ${totaldown wlp3s0} ${alignr}Total ${totalup wlp3s0} 
+$endif
+${if_up eno1}LAN ${hr 1}
+
+Down ${downspeed eno1}/s ${alignr}Up ${upspeed eno1}/s
+${downspeedgraph eno1 25,107 00FF00 FF0000 -t} ${alignr}${upspeedgraph eno1 25,107 00FF00 FF0000 -t}
+Total ${totaldown eno1} ${alignr}Total ${totalup eno1} 
+$endif
